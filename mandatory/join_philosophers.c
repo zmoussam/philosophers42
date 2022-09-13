@@ -12,14 +12,15 @@
 
 #include "philosophers.h"
 
-void ft_pthread_join(int nbr_of_philosophers, t_philos *philos)
+void	ft_pthread_join(int nbr_of_philosophers, t_philos *philos)
 {
-    int i;
-    i = 0;
-    while(i < nbr_of_philosophers)
-    {
-        if(pthread_join(philos[i].philo, NULL))
-            printf("thread %d was not joined the main thread\n", i);
-        i++;
-    }
+	int	i;
+
+	i = 0;
+	while (i < nbr_of_philosophers)
+	{
+		if (pthread_join(philos[i].philo, NULL))
+			printf("thread %d was not joined the main thread\n", i);
+		i++;
+	}
 }

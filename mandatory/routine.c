@@ -12,46 +12,44 @@
 
 #include "philosophers.h"
 
-pthread_mutex_t died;
-void ft_usleep(int time_to_wait, long long execution_time)
-{ 
-    while(1)
-    {
-        if((get_time() - execution_time) >= time_to_wait)
-            break;
-    }
-}
-
-void    check_t_t_d(t_philos *philo)
+void	ft_usleep(int time_to_wait, long long execution_time)
 {
-    if ((get_time() - philo->time_of_last_meal) >= philo->arg_info.t_t_d)
-        {
-            pthread_mutex_lock(philo->msg);
-            printf("%lldms philo %d died 💀🎃\n", (get_time() - philo->time) , philo->id);
-            exit(0);
-            pthread_mutex_unlock(philo->msg);
-        }
+	while (1)
+	{
+		if ((get_time() - execution_time) >= time_to_wait)
+			break ;
+	}
 }
 
-void *routine(void *arg)
+void	check_t_t_d(t_philos *philo)
 {
-    t_philos philo;
-    philo = *(t_philos *)arg;
-    
-    if(philo.id % 2 == 0)
-        ft_usleep(30, get_time());
-    
-   while(1)
-   {
-        check_t_t_d(&philo);
-        if(!take_left_fork(&philo))
-            break ;
-        take_right_fork(&philo);
-        if(!is_eating(&philo))
-            break ;
-        is_sleeping(&philo);
-        is_thinking(&philo);
-   }
-return NULL;
+	if ((get_time() - philo->time_of_last_meal) >= philo->arg_info.t_t_d)
+	{
+		pthread_mutex_lock(philo->msg);
+		printf("%lldms philo %d died 💀🎃\n",
+			(get_time() - philo->time), philo->id);
+		exit(0);
+		pthread_mutex_unlock(philo->msg);
+	}
 }
 
+void	*routine(void *arg)
+{
+	t_philos	philo;
+
+	philo = *(t_philos *)arg;
+	if (philo.id % 2 == 0)
+		ft_usleep(30, get_time());
+	while (1)
+	{
+		check_t_t_d(&philo);
+		if (!take_left_fork(&philo))
+			break ;
+		take_right_fork(&philo);
+		if (!is_eating(&philo))
+			break ;
+		is_sleeping(&philo);
+		is_thinking(&philo);
+	}
+	return (NULL);
+}
