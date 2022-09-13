@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:56:50 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/13 17:19:31 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/13 20:37:02 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ int main(int argc, char **argv)
         create_philosophers(args_to_info, philo_infos);
         ft_pthread_join(args_to_info.n_of_p, philo_infos);
         ft_free(philo_infos);
-        system("leaks philo");
     } 
 }

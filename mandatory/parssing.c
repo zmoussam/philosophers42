@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 22:32:57 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/13 16:29:38 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/13 20:45:57 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,11 @@ void get_arg_to_int(char **argv, t_arg *philos_info)
          philos_info->n_o_t_e_p_m_e = 0;
          philos_info->check_last_arg = 0;  
     }
+    if (philos_info->n_of_p < 0 || philos_info->t_t_d < 0 || philos_info->t_t_e
+     || philos_info->t_t_s < 0 || philos_info->n_o_t_e_p_m_e < 0)
+     {
+         printf("error : arg invalide!! --> nombre long\n");
+         exit(EXIT_FAILURE);
+     }
 }
 

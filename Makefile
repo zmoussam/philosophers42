@@ -6,7 +6,7 @@
 #    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 21:03:36 by zmoussam          #+#    #+#              #
-#    Updated: 2022/09/05 17:39:14 by zmoussam         ###   ########.fr        #
+#    Updated: 2022/09/13 20:36:24 by zmoussam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = philo
 BONUS_NAME = philo_bonus
 SRC = ./mandatory/philosophers.c ./libft/ft_atoi.c ./libft/ft_isdigit.c\
 	./mandatory/init_philo_and_mutex.c ./mandatory/join_philosophers.c\
-	./mandatory/parssing.c  ./mandatory/routine.c ./mandatory/get_time.c
+	./mandatory/parssing.c  ./mandatory/routine.c ./mandatory/get_time.c\
+	./mandatory/routine_func.c
 			
 BNS_SRC = ./philo_bonus/philo_bonus.c
 OBJ = ${SRC:.c=.o}
