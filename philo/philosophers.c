@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:56:50 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/13 20:37:02 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/15 17:02:46 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ int	main(int argc, char **argv)
 {
 	t_arg		args_to_info;
 	t_philos	*philo_infos;
-	int			i;
-
-	i = 0;
+	
 	if (argc == 5 || argc == 6)
 	{
 		parssing(argv);
