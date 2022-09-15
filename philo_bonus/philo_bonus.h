@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 16:55:10 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/15 19:12:50 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/15 22:27:36 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@
 # include<stdlib.h>
 # include<sys/time.h>
 # include<sys/wait.h>
+# include<sys/types.h>
 # include<unistd.h>
 # include<errno.h>
-#include <semaphore.h>
+# include <semaphore.h>
+# include<fcntl.h>    //For O_* constants
+# include<sys/stat.h> // For mode constants
+
+#define SEM_NAME_1 "/SEM_1"
+#define SEM_NAME_2 "/SEM_2"
 
 # include "../libft/libft.h"
 
@@ -34,21 +40,18 @@ typedef struct t_arg{
 }	t_arg;
 typedef struct t_philosopher{
 	int				id;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*msg;
 	int				count_meal;
 	long			time_of_last_meal;
-	pthread_t		philo;
 	long			time;
 	t_arg			arg_info;
+	int				fork_id;
 }	t_philos;
 
 void		parssing(char **argv);
 void		get_arg_to_int(char **argv, t_arg *philos_info);
 void		ft_usleep(int time_to_wait, long long execution_time);
 long long	get_time(void);
-void		routine(int i, t_arg args_to_info, long long time);
-void	create_philo(t_arg args_info);
+void		routine(t_philos *philosopher, sem_t *forks);
+void		create_philo(t_arg args_info, t_philos *philosophers, sem_t *f);
 
 #endif

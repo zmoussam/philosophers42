@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 21:45:10 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/13 15:59:58 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/15 22:07:02 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	create_philosophers(t_arg philo_info, t_philos *philosophers)
 	while (i < philo_info.n_of_p)
 	{
 		philosophers[i].arg_info = philo_info;
-		philosophers[i].time_of_last_meal = get_time();
 		philosophers[i].time = get_time();
+		philosophers[i].time_of_last_meal = philosophers[i].time;
 		if (pthread_create(&((philosophers[i]).philo), NULL, \
 				&routine, &philosophers[i]))
 		{
