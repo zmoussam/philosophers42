@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:57:38 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/15 17:02:04 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/17 15:31:36 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		init_right_forks(t_philos *philos, int nbr_of_philo);
 void		ft_pthread_join(int nbr_of_philosophers, t_philos *philos);
 void		*routine(void *arg);
 long long	get_time(void);
-void		ft_usleep(int time_to_wait, long long execution_time);
+void		ft_usleep(int time_to_wait, long long execution_time, t_philos *philo);
 void		init_mutex_msg(t_philos *philosophers);
 void		ft_free(t_philos *philo_info);
 void		check_t_t_d(t_philos *philo);

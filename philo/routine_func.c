@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 20:33:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/13 20:41:18 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/17 15:45:54 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	take_left_fork(t_philos *philo)
 	pthread_mutex_unlock(philo->msg);
 	if (philo->arg_info.n_of_p == 1)
 	{
-		ft_usleep(philo->arg_info.t_t_d, get_time());
+		ft_usleep(philo->arg_info.t_t_d, get_time(), philo);
 		printf("%lldms philo %d died 💀🎃\n",
 			(get_time() - philo->time), philo->id);
 		return (0);
@@ -47,7 +47,7 @@ int	is_eating(t_philos *philo)
 	printf("%lldms philo %d is eating 🍽️ 🍔\n",
 		(get_time() - philo->time), philo->id);
 	pthread_mutex_unlock(philo->msg);
-	ft_usleep(philo->arg_info.t_t_e, get_time());
+	ft_usleep(philo->arg_info.t_t_e, get_time(), philo);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	if (philo->arg_info.check_last_arg == 1)
@@ -62,16 +62,16 @@ int	is_eating(t_philos *philo)
 void	is_sleeping(t_philos *philo)
 {
 	pthread_mutex_lock(philo->msg);
-	printf("%lldms philo %d is sleeping 🥱 😴\n",
+	printf("%lldms philo %d is sleeping 😴\n",
 		(get_time() - philo->time), philo->id);
 	pthread_mutex_unlock(philo->msg);
-	ft_usleep(philo->arg_info.t_t_s, get_time());
+	ft_usleep(philo->arg_info.t_t_s, get_time(), philo);
 }
 
 void	is_thinking(t_philos *philo)
 {
 	pthread_mutex_lock(philo->msg);
-	printf("%lldms philo %d is thinking 🤔 🤔\n",
+	printf("%lldms philo %d is thinking 🤔\n",
 		(get_time() - philo->time), philo->id);
 	pthread_mutex_unlock(philo->msg);
 }

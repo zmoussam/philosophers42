@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 16:55:10 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/15 22:27:36 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:35:48 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include<sys/wait.h>
 # include<sys/types.h>
 # include<unistd.h>
+# include<signal.h>
 # include<errno.h>
 # include <semaphore.h>
 # include<fcntl.h>    //For O_* constants

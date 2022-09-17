@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 21:06:48 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/15 22:17:57 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:59:22 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int main()
         sem_post(sem1);
 
         /* evry process closes the sems */
-        // sem_close(sem1);
-        // sem_close(sem2);
+        sem_close(sem1);
+        sem_close(sem2);
     } else {
         sem_wait(sem1);
         printf("2\n");
@@ -54,9 +54,9 @@ int main()
         
         wait(NULL);
 
-        // sem_close(sem1);
-        // sem_close(sem2);
-        // sem_unlink(SEM_NAME_1);
-        // sem_unlink(SEM_NAME_2);
+        sem_close(sem1);
+        sem_close(sem2);
+        sem_unlink(SEM_NAME_1);
+        sem_unlink(SEM_NAME_2);
     }
 }

@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 19:10:14 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/15 22:51:05 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/16 18:11:32 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void routine(t_philos *philosopher, sem_t *forks)
 	{
 		check_t_t_d(philosopher);
 		sem_wait(forks);
-		philosopher->time_of_last_meal = get_time();
 		check_t_t_d(philosopher);
-		printf(" %lldms philo %d is take a fork 🍴\n",get_time() - philosopher->time, philosopher->id);
-		printf(" %lldms philo %d is take a fork\n",get_time() - philosopher->time, philosopher->id);
-		printf(" %lldms philo %d is eating 🍽️ 🍔\n",get_time() - philosopher->time, philosopher->id);
+		printf(" %lldms philo %d is take a fork 🍴\n", (get_time() - philosopher->time), philosopher->id);
+		printf(" %lldms philo %d is take a fork 🍴\n", (get_time() - philosopher->time), philosopher->id);
+		printf(" %lldms philo %d is eating 🍽️ 🍔\n", (get_time() - philosopher->time), philosopher->id);
+		philosopher->time_of_last_meal = get_time();
 		ft_usleep(philosopher->arg_info.t_t_e, get_time());
 		sem_post(forks);
         if (philosopher->arg_info.check_last_arg == 1)
@@ -51,6 +51,7 @@ void routine(t_philos *philosopher, sem_t *forks)
 		}
 		printf(" %lldms philo %d is sleeping 🥱 😴\n",get_time() - philosopher->time, philosopher->id);
 		ft_usleep(philosopher->arg_info.t_t_s, get_time());
+		check_t_t_d(philosopher);
 		printf(" %lldms philo %d is thinking 🤔 🤔\n", get_time() - philosopher->time,philosopher->id);
 	}
 	sem_close(forks);

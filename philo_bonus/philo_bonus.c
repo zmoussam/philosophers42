@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 16:02:01 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/15 22:23:14 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/16 18:01:08 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 		create_philo(args_to_info, philo_infos, forks);
 		// while(waitpid(-1, NULL, WNOHANG) != -1 || errno != ECHILD);
         sem_unlink(SEM_NAME_1);
-
+		sem_close(forks);
 	}
 	else
 		printf("Need argument!!!\n");

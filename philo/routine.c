@@ -6,16 +6,17 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 21:51:48 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/13 20:39:40 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/17 15:45:59 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_usleep(int time_to_wait, long long execution_time)
+void	ft_usleep(int time_to_wait, long long execution_time, t_philos *philo)
 {
 	while (1)
 	{
+		check_t_t_d(philo);
 		if ((get_time() - execution_time) >= time_to_wait)
 			break ;
 	}
@@ -39,7 +40,7 @@ void	*routine(void *arg)
 
 	philo = *(t_philos *)arg;
 	if (philo.id % 2 == 0)
-		ft_usleep(30, get_time());
+		ft_usleep(30, get_time(), &philo);
 	while (1)
 	{
 		check_t_t_d(&philo);
