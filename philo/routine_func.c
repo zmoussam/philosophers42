@@ -6,13 +6,13 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 20:33:21 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 01:09:24 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:58:09 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	take_left_fork(t_philos *philo)
+void	take_left_fork(t_philos *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	check_t_t_d(philo);
@@ -20,14 +20,6 @@ int	take_left_fork(t_philos *philo)
 	printf("%lldms philo %d has taken a fork 🍴\n",
 		(get_time() - philo->time), philo->id);
 	pthread_mutex_unlock(philo->msg);
-	if (philo->arg_info.n_of_p == 1)
-	{
-		ft_usleep(philo->arg_info.t_t_d, get_time(), NULL);
-		printf("%lldms philo %d died 💀🎃\n",
-			(get_time() - philo->time), philo->id);
-		return (0);
-	}
-	return (1);
 }
 
 void	take_right_fork(t_philos *philo)

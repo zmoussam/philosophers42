@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 16:55:10 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 01:28:10 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/18 19:33:36 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # include <semaphore.h>
 # include<fcntl.h>    //For O_* constants
 # include<sys/stat.h> // For mode constants
-
+# define SEM_FORK "/forks"
+# define SEM_PRINT_MSG "/print_msg"
 # include "../libft/libft.h"
 
 typedef struct t_arg{
@@ -56,5 +57,11 @@ void		routine(t_philos *philosopher);
 void		create_philo(t_arg args_info, t_philos *philosophers);
 void		if_there_is_one_philo(t_philos *philo, t_arg atgs);
 void		init_sem(t_philos *philos, int nbr_of_philo);
+void		wait_philo(t_philos *philo);
+void		take_first_fork(t_philos *philosopher);
+void		take_second_fork(t_philos *philosopher);
+int			is_eating(t_philos *philosopher);
+void		is_sleeping(t_philos *philosopher);
+void		is_thinking(t_philos *philosopher);
 
 #endif

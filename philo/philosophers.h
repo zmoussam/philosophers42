@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:57:38 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 01:50:44 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/18 19:38:41 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		parssing(char **argv);
 void		get_arg_to_int(char **argv, t_arg *philos_info);
 int			create_philosophers(t_arg philo_info, t_philos *philosophers);
 void		init_id(t_philos *philo_info, int nbr_of_philo);
-void		init_left_forks_and_msg(t_philos *philos, int nbr_of_forks);
+void		*init_left_forks_and_msg(t_philos *philos, int nbr_of_forks);
 void		init_right_forks(t_philos *philos, int nbr_of_philo);
 void		ft_pthread_join(int nbr_of_philosophers, t_philos *philos);
 void		*routine(void *arg);
@@ -54,10 +54,12 @@ void		ft_usleep(int time_to_sleep, long long exec_time, t_philos *philo);
 void		init_mutex_msg(t_philos *philosophers);
 void		ft_free(t_philos *philo_info);
 void		check_t_t_d(t_philos *philo);
-int			take_left_fork(t_philos *philo);
+void		take_left_fork(t_philos *philo);
 void		take_right_fork(t_philos *philo);
 int			is_eating(t_philos *philo);
 void		is_sleeping(t_philos *philo);
 void		is_thinking(t_philos *philo);
+void		if_there_is_one_philo(t_arg args, t_philos *philo);
+void		*routine_for_one(void *arg);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 21:03:36 by zmoussam          #+#    #+#              #
-#    Updated: 2022/09/17 17:00:23 by zmoussam         ###   ########.fr        #
+#    Updated: 2022/09/18 17:14:16 by zmoussam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ SRC = ./philo/philosophers.c ./libft/ft_atoi.c ./libft/ft_isdigit.c\
 	./philo/parssing.c  ./philo/routine.c ./philo/get_time.c\
 	./philo/routine_func.c
 			
-BNS_SRC = ./philo_bonus/philo_bonus.c
+BNS_SRC = ./philo_bonus/philo_bonus.c ./philo_bonus/create_philo.c\
+		./philo_bonus/get_time.c ./philo_bonus/parssing.c \
+		./philo_bonus/routine.c ./libft/ft_atoi.c ./libft/ft_isdigit.c\
+		./philo_bonus/routine_func.c
 OBJ = ${SRC:.c=.o}
 BOBJ = ${BNS_SRC:.c=.o}
 CC = cc
@@ -36,7 +39,7 @@ $(NAME): $(OBJ)  ./philo/philosophers.h ./libft/libft.h
 
 bonus: $(BONUS_NAME)
  
-$(BONUS_NAME) : $(BOBJ)  ./libft/libft.h
+$(BONUS_NAME) : $(BOBJ)  ./libft/libft.h ./philo_bonus/philo_bonus.h
 	@$(CC) $(CFLAGS) $(BNS_SRC) -o $(BONUS_NAME)
 	@echo "Compiling Successfull"
 	

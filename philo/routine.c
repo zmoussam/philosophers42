@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 21:51:48 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 01:52:01 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/18 20:00:27 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,24 @@ void	check_t_t_d(t_philos *philo)
 		pthread_mutex_lock(philo->msg);
 		printf("%lldms philo %d died 💀🎃\n",
 			(get_time() - philo->time), philo->id);
+		pthread_mutex_destroy(philo->msg);
 		exit(0);
-		pthread_mutex_unlock(philo->msg);
 	}
+}
+
+void	*routine_for_one(void *arg)
+{
+	t_philos	*philo;
+
+	philo = (t_philos *)arg;
+	pthread_mutex_lock(philo->msg);
+	printf("%lldms philo %d has taken a fork 🍴\n",
+		(get_time() - philo->time), philo->id);
+	ft_usleep(philo->arg_info.t_t_d, get_time(), NULL);
+	printf("%lldms philo %d died 💀🎃\n",
+		(get_time() - philo->time), philo->id);
+	ft_free(philo);
+	exit(0);
 }
 
 void	*routine(void *arg)
@@ -46,8 +61,7 @@ void	*routine(void *arg)
 	while (1)
 	{
 		check_t_t_d(philo);
-		if (!take_left_fork(philo))
-			break ;
+		take_left_fork(philo);
 		take_right_fork(philo);
 		if (!is_eating(philo))
 			break ;
