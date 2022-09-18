@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 22:32:57 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/13 21:28:04 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/18 00:51:57 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	get_arg_to_int(char **argv, t_arg *philos_info)
 	philos_info->t_t_d = ft_atoi(argv[2]);
 	philos_info->t_t_e = ft_atoi(argv[3]);
 	philos_info->t_t_s = ft_atoi(argv[4]);
-	if (argv[5])
+	if (argv[5] && argv[0] != '\0')
 	{
 		philos_info->n_o_t_e_p_m_e = ft_atoi(argv[5]);
 		philos_info->check_last_arg = 1;

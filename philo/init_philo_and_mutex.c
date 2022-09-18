@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 21:45:10 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/15 22:07:02 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/18 00:50:02 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ void	init_id(t_philos *philo_info, int nbr_of_philo)
 void	init_left_forks_and_msg(t_philos *philos, int nbr_of_forks)
 {
 	int	i;
-
+	
 	i = 0;
-	philos[0].msg = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(philos[0].msg, NULL);
+	philos->msg = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if(philos->msg == NULL)
+		//exit(0);
+	pthread_mutex_init(philos->msg, NULL);
 	while (i < nbr_of_forks)
 	{
 		philos[i].left_fork = \

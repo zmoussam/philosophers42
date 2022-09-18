@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:56:50 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/15 17:02:46 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/18 00:50:27 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(int argc, char **argv)
 		get_arg_to_int(argv, &args_to_info);
 		philo_infos = \
 			(t_philos *)malloc(sizeof(t_philos) * args_to_info.n_of_p);
+		if(philo_infos == NULL)
+			exit(0);
 		init_id(philo_infos, args_to_info.n_of_p);
 		init_left_forks_and_msg(philo_infos, args_to_info.n_of_p);
 		init_right_forks(philo_infos, args_to_info.n_of_p);

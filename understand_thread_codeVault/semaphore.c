@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 21:06:48 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/16 17:59:22 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/17 23:41:04 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,33 @@ int main()
 {
     sem_t *sem1 = NULL;
     sem_t *sem2 = NULL;
+    int id;
+    int i = 1;
+    int id2;
 
-    sem1 = sem_open(SEM_NAME_1, O_CREAT | O_EXCL, S_IRUSR | S_IWUSR, 0);
-    sem2 = sem_open(SEM_NAME_2, O_CREAT | O_EXCL, S_IRUSR | S_IWUSR, 0);
-    if(fork() == 0){
-        printf("1\n");
-        sem_post(sem1);
-        sem_wait(sem2);
-        printf("3\n");
-        sem_post(sem1);
-
-        /* evry process closes the sems */
-        sem_close(sem1);
-        sem_close(sem2);
-    } else {
-        sem_wait(sem1);
-        printf("2\n");
-        sem_post(sem2);
-        sem_wait(sem1);
-        printf("4\n");
-        
-        wait(NULL);
-
-        sem_close(sem1);
-        sem_close(sem2);
-        sem_unlink(SEM_NAME_1);
-        sem_unlink(SEM_NAME_2);
+    sem1 = sem_open(SEM_NAME_1, O_CREAT | O_EXCL, 0777, 1);
+    sem2 = sem_open(SEM_NAME_2, O_CREAT | O_EXCL ,0777,  0);
+    id = fork();
+    if(id == 0){
+        printf("%d \n", getpid());
+       while(1){
+           sleep(1);
+           printf("hi\n");
+       }
     }
+    id2 = fork();
+    if(id2 == 0){
+        printf("%d \n", getpid());
+        exit(0);
+    }
+        sleep(1);
+        while(1)
+         if(waitpid(-1, NULL, WNOHANG))
+         {
+             printf("killed\n");
+             printf("%d\n", id2);
+             kill(id, SIGKILL);
+             exit(0) ;
+             
+         }
 }
