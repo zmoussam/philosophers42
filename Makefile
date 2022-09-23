@@ -6,18 +6,18 @@
 #    By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 21:03:36 by zmoussam          #+#    #+#              #
-#    Updated: 2022/09/18 17:14:16 by zmoussam         ###   ########.fr        #
+#    Updated: 2022/09/22 01:42:51 by zmoussam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philos
 BONUS_NAME = philos_bonus
-SRC = ./philo/philosophers.c ./libft/ft_atoi.c ./libft/ft_isdigit.c\
-	./philo/init_philo_and_mutex.c ./philo/join_philosophers.c\
+SRC = ./philo/main.c ./libft/ft_atoi.c ./libft/ft_isdigit.c\
+	./philo/init_philo_and_mutex.c \
 	./philo/parssing.c  ./philo/routine.c ./philo/get_time.c\
 	./philo/routine_func.c
 			
-BNS_SRC = ./philo_bonus/philo_bonus.c ./philo_bonus/create_philo.c\
+BNS_SRC = ./philo_bonus/main.c ./philo_bonus/create_philo.c\
 		./philo_bonus/get_time.c ./philo_bonus/parssing.c \
 		./philo_bonus/routine.c ./libft/ft_atoi.c ./libft/ft_isdigit.c\
 		./philo_bonus/routine_func.c
@@ -25,7 +25,7 @@ OBJ = ${SRC:.c=.o}
 BOBJ = ${BNS_SRC:.c=.o}
 CC = cc
 RM = rm -rf
-CFLAGS =  -Wall -Wextra -Werror
+CFLAGS =  -Wall -Wextra -Werror 
 
 all: $(NAME)
 

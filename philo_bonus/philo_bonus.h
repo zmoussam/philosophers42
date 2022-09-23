@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 16:55:10 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 19:33:36 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/22 12:59:10 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,9 @@ typedef struct t_arg{
 	int	t_t_e;
 	int	t_t_s;
 	int	n_o_t_e_p_m_e;
-	int	check_last_arg;
 }	t_arg;
 typedef struct t_philosopher{
 	int				id;
-	int				count_meal;
 	sem_t			*fork;
 	sem_t			*print_msg;
 	long long		time_of_last_meal;
@@ -49,12 +47,13 @@ typedef struct t_philosopher{
 }	t_philos;
 
 void		parssing(char **argv);
+void		check_empty_arg(char **argv);
 void		get_arg_to_int(char **argv, t_arg *philos_info);
 void		ft_usleep(int time_to_sleep, long long exec_time, t_philos *philo);
 void		check_t_t_d(t_philos *philo);
 long long	get_time(void);
 void		routine(t_philos *philosopher);
-void		create_philo(t_arg args_info, t_philos *philosophers);
+void		*start_philo(t_arg args_info, t_philos *philosophers);
 void		if_there_is_one_philo(t_philos *philo, t_arg atgs);
 void		init_sem(t_philos *philos, int nbr_of_philo);
 void		wait_philo(t_philos *philo);

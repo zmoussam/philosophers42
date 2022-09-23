@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 19:11:32 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 19:34:08 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/22 13:14:45 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	wait_philo(t_philos *philo)
 {
 	int	i;
 
-	i = 0;
 	while (1)
 	{
 		if (waitpid(-1, NULL, WNOHANG))
@@ -25,24 +24,27 @@ void	wait_philo(t_philos *philo)
 			while (i < philo->arg_info.n_of_p)
 			{
 				kill(philo[i].fork_id, SIGKILL);
+				usleep(300000);
 				i++;
 			}
 			break ;
 		}
+		usleep(50);
 	}
 	sem_unlink(SEM_FORK);
 	sem_unlink(SEM_PRINT_MSG);
 	sem_close(philo->fork);
 	sem_close(philo->print_msg);
 	free(philo);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
-void	create_philo(t_arg args_info, t_philos *philosopher)
+void	*start_philo(t_arg args_info, t_philos *philosopher)
 {
 	int	i;
 
 	i = 0;
+	if_there_is_one_philo(philosopher, args_info);
 	while (i < args_info.n_of_p)
 	{
 		philosopher[i].fork_id = fork();
@@ -56,8 +58,11 @@ void	create_philo(t_arg args_info, t_philos *philosopher)
 			philosopher[i].print_msg = philosopher->print_msg;
 			routine(&philosopher[i]);
 		}
+		if (philosopher[i].fork_id == -1)
+			return (write(1, "can't create process!!\n", 23), exit(0), NULL);
 		i++;
 	}
+	return (0);
 }
 
 void	if_there_is_one_philo(t_philos *philo, t_arg args)
@@ -69,20 +74,18 @@ void	if_there_is_one_philo(t_philos *philo, t_arg args)
 		if (philo->fork_id == 0)
 		{
 			philo->time = get_time();
+			sem_wait(philo->fork);
 			printf("%lldms philo %d is take a fork 🍴\n", \
 				get_time() - philo->time, 1);
 			ft_usleep(philo->arg_info.t_t_d, get_time(), NULL);
 			printf("%lldms philo %d died 💀🎃\n", \
-				get_time() - philo->time, philo->id);
+				get_time() - philo->time, 1);
+			sem_close(philo->fork);
+			sem_close(philo->print_msg);
 			free(philo);
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
-		waitpid(philo->fork_id, NULL, 0);
-		sem_unlink(SEM_FORK);
-		sem_unlink(SEM_PRINT_MSG);
-		sem_close(philo->fork);
-		sem_close(philo->print_msg);
-		exit(0);
+		wait_philo(philo);
 	}
 }
 
@@ -96,6 +99,6 @@ void	init_sem(t_philos *philos, int nbr_of_philo)
 	{
 		printf("error : semaphore was not created!!\n");
 		free(philos);
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 }

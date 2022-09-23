@@ -6,15 +6,14 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 21:45:10 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 19:52:31 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/22 01:21:22 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	if_there_is_one_philo(t_arg args, t_philos *philo)
+int	if_there_is_one_philo(t_philos *philo)
 {
-	philo->arg_info = args;
 	if (philo->arg_info.n_of_p == 1)
 	{
 		philo->time = get_time();
@@ -22,83 +21,105 @@ void	if_there_is_one_philo(t_arg args, t_philos *philo)
 		{
 			pthread_mutex_lock(philo->msg);
 			printf("philosopher %d was not created!!!\n", 1);
-			ft_free(philo);
-			exit(0);
+			return (0);
 		}
-		ft_pthread_join(args.n_of_p, philo);
+		return (0);
 	}
+	return (1);
 }
 
-int	create_philosophers(t_arg philo_info, t_philos *philosophers)
+int	start_philosophers(t_philos *philosophers)
 {
 	int	i;
 
 	i = 0;
-	while (i < philo_info.n_of_p)
+	if (!if_there_is_one_philo(philosophers))
+		return (0);
+	while (i < philosophers->arg_info.n_of_p)
 	{
-		philosophers[i].arg_info = philo_info;
 		philosophers[i].time = get_time();
 		philosophers[i].time_of_last_meal = philosophers[i].time;
-		if (pthread_create(&((philosophers[i]).philo), NULL, \
-				&routine, &philosophers[i]))
+		if (pthread_create(&((philosophers[i]).philo), NULL, &routine, \
+			&philosophers[i]) || pthread_detach(philosophers[i].philo))
 		{
 			pthread_mutex_lock(philosophers->msg);
 			printf("philosopher %d was not created!!!\n", i + 1);
-			pthread_mutex_destroy(philosophers->msg);
-			free(philosophers->msg);
-			free(philosophers);
-			exit(0);
+			return (1);
 		}
 		i++;
 	}
 	return (0);
 }
 
-void	init_id(t_philos *philo_info, int nbr_of_philo)
+int	init_philo(t_philos *philos, t_arg philo_info)
 {
 	int	i;
 
 	i = 0;
-	while (i < nbr_of_philo)
+	philos->check_die = (int *)malloc(sizeof(int));
+	philos->count_meal = (int *)malloc(sizeof(int));
+	if (philos->check_die == NULL || philos->count_meal == NULL)
+		return (write(1, "memory was not allocated!!\n", 27));
+	philos->check_die[0] = 1;
+	philos->count_meal[0] = 0;
+	while (i < philo_info.n_of_p)
 	{
-		philo_info[i].id = i + 1;
+		philos[i].arg_info = philo_info;
+		philos[i].id = i + 1;
+		philos[i].check_die = philos[0].check_die;
+		philos[i].count_meal = philos[0].count_meal;
 		i++;
 	}
+	if (init_forks(philos) || init_mutex(philos))
+		return (1);
+	return (0);
 }
 
-void	*init_left_forks_and_msg(t_philos *philos, int nbr_of_forks)
+int	init_forks(t_philos *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->arg_info.n_of_p)
+	{
+		philo[i].left_fork = \
+					(pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+		if (philo[i].left_fork == NULL)
+			return (write(1, "memory was not allocated!!\n", 27));
+		pthread_mutex_init(philo[i].left_fork, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < philo->arg_info.n_of_p)
+	{
+		if (i == 0)
+			philo[i].right_fork = philo[philo->arg_info.n_of_p - 1].left_fork;
+		else
+			philo[i].right_fork = philo[i - 1].left_fork;
+		i++;
+	}
+	return (0);
+}
+
+int	init_mutex(t_philos *philos)
 {
 	int	i;
 
 	i = 0;
 	philos->msg = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (philos->msg == NULL)
-		return (write(1, "memory was not allocated!!\n", 27), exit(0), NULL);
+	philos->die = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	philos->meals = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (philos->msg == NULL || philos->die == NULL || philos->meals == NULL)
+		return (write(1, "memory was not allocated!!\n", 27));
 	pthread_mutex_init(philos->msg, NULL);
-	while (i < nbr_of_forks)
+	pthread_mutex_init(philos->die, NULL);
+	pthread_mutex_init(philos->meals, NULL);
+	while (i < philos->arg_info.n_of_p)
 	{
-		philos[i].left_fork = \
-					(pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-		if (!philos[i].left_fork)
-			return (write(1, "memory was not allocated!!\n", 27), exit(0), NULL);
-		philos[i].msg = philos[0].msg;
-		pthread_mutex_init(philos[i].left_fork, NULL);
+		philos[i].msg = philos->msg;
+		philos[i].die = philos->die;
+		philos[i].meals = philos->meals;
 		i++;
 	}
-	return (NULL);
-}
-
-void	init_right_forks(t_philos *philos, int nbr_of_philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < nbr_of_philo)
-	{
-		if (i == 0)
-			philos[i].right_fork = philos[nbr_of_philo - 1].left_fork;
-		else
-			philos[i].right_fork = philos[i - 1].left_fork;
-		i++;
-	}
+	return (0);
 }

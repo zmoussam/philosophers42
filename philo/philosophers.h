@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 17:57:38 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 19:38:41 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/22 12:59:26 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct t_arg{
 	int	t_t_e;
 	int	t_t_s;
 	int	n_o_t_e_p_m_e;
-	int	check_last_arg;
 }	t_arg;
 
 typedef struct t_philosopher{
@@ -34,20 +33,23 @@ typedef struct t_philosopher{
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*msg;
-	int				count_meal;
+	pthread_mutex_t	*die;
+	pthread_mutex_t	*meals;
+	int				*check_die;
+	int				*count_meal;
 	long			time_of_last_meal;
 	pthread_t		philo;
 	long			time;
 	t_arg			arg_info;
 }	t_philos;
 
-void		parssing(char **argv);
-void		get_arg_to_int(char **argv, t_arg *philos_info);
-int			create_philosophers(t_arg philo_info, t_philos *philosophers);
-void		init_id(t_philos *philo_info, int nbr_of_philo);
-void		*init_left_forks_and_msg(t_philos *philos, int nbr_of_forks);
-void		init_right_forks(t_philos *philos, int nbr_of_philo);
-void		ft_pthread_join(int nbr_of_philosophers, t_philos *philos);
+int			parssing(char **argv);
+int			get_arg_to_int(char **argv, t_arg *philos_info);
+int			check_empty_arg(char **argv);
+int			start_philosophers(t_philos *philosophers);
+int			init_philo(t_philos *philos, t_arg philo_info);
+int			init_forks(t_philos *philos);
+int			init_mutex(t_philos *philos);
 void		*routine(void *arg);
 long long	get_time(void);
 void		ft_usleep(int time_to_sleep, long long exec_time, t_philos *philo);
@@ -59,7 +61,8 @@ void		take_right_fork(t_philos *philo);
 int			is_eating(t_philos *philo);
 void		is_sleeping(t_philos *philo);
 void		is_thinking(t_philos *philo);
-void		if_there_is_one_philo(t_arg args, t_philos *philo);
+int			if_there_is_one_philo(t_philos *philo);
 void		*routine_for_one(void *arg);
+void		wait_philosophers(t_philos *philos, int nbr_of_meal);
 
 #endif

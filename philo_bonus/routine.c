@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 19:10:14 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 19:32:36 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/22 12:49:21 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_t_t_d(t_philos *philo)
 		sem_wait(philo->print_msg);
 		printf("%lldms philo %d died 💀🎃\n",
 			(get_time() - philo->time), philo->id);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -48,7 +48,9 @@ void	routine(t_philos *philosopher)
 		is_sleeping(philosopher);
 		is_thinking(philosopher);
 	}
+	sem_unlink(SEM_FORK);
+	sem_unlink(SEM_PRINT_MSG);
 	sem_close(philosopher->fork);
 	sem_close(philosopher->print_msg);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }

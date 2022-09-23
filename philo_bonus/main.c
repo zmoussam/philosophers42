@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_bonus.c                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 16:02:01 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 19:02:26 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:07:37 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,19 @@
 
 int	main(int argc, char **argv)
 {
-	t_arg		args_to_info;
-	t_philos	*philosophers;
+	t_arg		args;
+	t_philos	*philos;
 
 	if (argc == 5 || argc == 6)
 	{
 		parssing(argv);
-		get_arg_to_int(argv, &args_to_info);
-		philosophers = \
-			(t_philos *)malloc(sizeof(t_philos) * args_to_info.n_of_p);
-		if (philosophers == NULL)
-		{
-			write(1, "memory was not allocated!!\n", 27);
-			exit(0);
-		}
-		init_sem(philosophers, args_to_info.n_of_p);
-		if_there_is_one_philo(philosophers, args_to_info);
-		create_philo(args_to_info, philosophers);
-		wait_philo(philosophers);
+		get_arg_to_int(argv, &args);
+		philos = (t_philos *)malloc(sizeof(t_philos) * args.n_of_p);
+		if (philos == NULL)
+			return (write(1, "memory was not allocated!!\n", 27));
+		init_sem(philos, args.n_of_p);
+		start_philo(args, philos);
+		wait_philo(philos);
 	}
 	else
 		printf("Need argument!!!\n");

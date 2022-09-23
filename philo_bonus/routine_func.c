@@ -6,7 +6,7 @@
 /*   By: zmoussam <zmoussam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 16:49:35 by zmoussam          #+#    #+#             */
-/*   Updated: 2022/09/18 17:36:50 by zmoussam         ###   ########.fr       */
+/*   Updated: 2022/09/22 12:45:10 by zmoussam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	is_eating(t_philos *philosopher)
 	ft_usleep(philosopher->arg_info.t_t_e, get_time(), NULL);
 	sem_post(philosopher->fork);
 	sem_post(philosopher->fork);
-	if (philosopher->arg_info.check_last_arg == 1)
+	if (philosopher->arg_info.n_o_t_e_p_m_e != 0)
 	{
 		philosopher->arg_info.n_o_t_e_p_m_e--;
 		if (philosopher->arg_info.n_o_t_e_p_m_e == 0)
